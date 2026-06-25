@@ -1,0 +1,111 @@
+/* ============================================================
+   DESIGN TOKENS — change these to rebrand the whole site
+   ============================================================ */
+:root {
+  --color-bg: #F7F9F7;
+  --color-surface: #FFFFFF;
+  --color-text: #1F2A2E;
+  --color-text-muted: #5B6B66;
+  --color-primary: #2C6E68;
+  --color-primary-dark: #1F4F4B;
+  --color-sage: #A8C3B5;
+  --color-sand: #E9E3D6;
+  --color-coral: #D98C6B;
+  --color-coral-dark: #C16E4D;
+  --color-border: #DCE5DF;
+
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  --radius-sm: 6px;
+  --radius-md: 14px;
+  --radius-lg: 28px;
+
+  --container-width: 1120px;
+}
+
+/* ============================================================
+   RESET
+   ============================================================ */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; cursor: pointer; }
+ul { margin: 0; padding: 0; list-style: none; }
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.15;
+  margin: 0;
+}
+
+h1 { font-size: clamp(2.4rem, 5vw, 3.6rem); }
+h2 { font-size: clamp(1.8rem, 3.5vw, 2.4rem); }
+h3 { font-size: 1.25rem; }
+
+p { margin: 0; }
+
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+section {
+  padding: 88px 0;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: var(--radius-sm);
+  border: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.btn:focus-visible {
+  outline: 3px solid var(--color-sage);
+  outline-offset: 2px;
+}
+.btn--primary {
+  background: var(--color-coral);
+  color: white;
+}
+.btn--primary:hover {
+  background: var(--color-coral-dark);
+  transform: translateY(-1px);
+}
+.btn--secondary {
+  background: transparent;
+  color: var(--color-primary-dark);
+  border: 1px solid var(--color-border);
+}
+.btn--secondary:hover {
+  border-color: var(--color-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}

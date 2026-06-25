@@ -1,0 +1,130 @@
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 24px;
+  max-width: var(--container-width);
+  margin: 0 auto;
+}
+
+.navbar__logo {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--color-primary-dark);
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.navbar__logo-mark {
+  color: var(--color-coral);
+}
+
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.navbar__link {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
+}
+.navbar__link:hover,
+.navbar__link--active {
+  color: var(--color-primary-dark);
+  border-bottom-color: var(--color-sage);
+}
+
+.navbar__cta {
+  background: var(--color-primary);
+  color: white;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.navbar__cta:hover {
+  background: var(--color-primary-dark);
+}
+
+@media (max-width: 720px) {
+  .navbar { flex-direction: column; gap: 14px; }
+  .navbar__links { flex-wrap: wrap; justify-content: center; gap: 16px; }
+}
+
+/* ============================================================
+   WAVE DIVIDER — signature element
+   Represents restored range of motion / fluid movement
+   ============================================================ */
+.wave-divider {
+  width: 100%;
+  height: 60px;
+  overflow: hidden;
+}
+.wave-divider svg {
+  width: 100%;
+  height: 100%;
+}
+.wave-divider__path {
+  fill: none;
+  stroke: var(--color-sage);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 8 11;
+  animation: wave-flow 7s linear infinite;
+}
+.wave-divider--flip svg {
+  transform: scaleY(-1);
+}
+@keyframes wave-flow {
+  to { stroke-dashoffset: -190; }
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  background: var(--color-primary-dark);
+  color: var(--color-sand);
+  padding: 56px 0 32px;
+}
+.footer__grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 32px;
+}
+.footer__logo {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: white;
+}
+.footer h4 {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+  margin-bottom: 12px;
+}
+.footer p, .footer a {
+  font-size: 0.92rem;
+  color: var(--color-sand);
+  opacity: 0.9;
+}
+.footer li { margin-bottom: 6px; }
+.footer__bottom {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+@media (max-width: 720px) {
+  .footer__grid { grid-template-columns: 1fr; }
+}
