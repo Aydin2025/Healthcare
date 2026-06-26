@@ -10,6 +10,9 @@ import Signup from './pages/Signup'
 import Book from './pages/Book'
 import PatientDashboard from './pages/PatientDashboard'
 import StaffDashboard from './pages/StaffDashboard'
+import StaffPatients from './pages/StaffPatients'
+import PatientPlanEditor from './pages/PatientPlanEditor'
+import ExerciseLibrary from './pages/ExerciseLibrary'
 
 export default function App() {
   return (
@@ -36,6 +39,30 @@ export default function App() {
             element={
               <ProtectedRoute allowedRoles={['practitioner', 'admin']}>
                 <StaffDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/staff/patients"
+            element={
+              <ProtectedRoute allowedRoles={['practitioner', 'admin']}>
+                <StaffPatients />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/staff/patients/:patientId"
+            element={
+              <ProtectedRoute allowedRoles={['practitioner', 'admin']}>
+                <PatientPlanEditor />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/staff/exercises"
+            element={
+              <ProtectedRoute allowedRoles={['practitioner', 'admin']}>
+                <ExerciseLibrary />
               </ProtectedRoute>
             }
           />

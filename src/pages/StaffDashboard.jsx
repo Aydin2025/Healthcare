@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { supabase } from '../supabaseClient'
 import { useAuth } from '../context/AuthContext'
 import { formatTimeLabel, formatDateLabel } from '../utils/time'
@@ -58,7 +59,11 @@ export default function StaffDashboard() {
           <p className="eyebrow">Staff Dashboard</p>
           <h1>Welcome, {profile?.full_name || 'there'}.</h1>
         </div>
-        <button className="btn btn--secondary" onClick={signOut}>Log Out</button>
+        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+          <Link to="/staff/patients" className="btn btn--secondary">Patients</Link>
+          <Link to="/staff/exercises" className="btn btn--secondary">Exercise Library</Link>
+          <button className="btn btn--secondary" onClick={signOut}>Log Out</button>
+        </div>
       </div>
 
       {!loading && !practitionerId && (
@@ -102,13 +107,6 @@ export default function StaffDashboard() {
             </div>
           ))}
         </div>
-      </section>
-
-      <section style={{ marginTop: 40 }}>
-        <h3 style={{ marginBottom: 16 }}>Patient Exercise Plans</h3>
-        <p style={{ color: 'var(--color-text-muted)' }}>
-          Building and assigning exercise plans will be added here in the next step.
-        </p>
       </section>
 
       {past.length > 0 && (

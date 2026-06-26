@@ -8,6 +8,8 @@ import './styles/components.css'
 import './styles/pages.css'
 import './styles/auth.css'
 import './styles/booking.css'
+import './styles/appointments.css'
+import './styles/plans.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
