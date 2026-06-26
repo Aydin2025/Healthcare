@@ -2,7 +2,8 @@
    HERO
    ============================================================ */
 .hero {
-  padding: 64px 0 40px;
+  padding-top: 64px;
+  padding-bottom: 40px;
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 48px;
