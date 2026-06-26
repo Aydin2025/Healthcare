@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../supabaseClient'
 import { useAuth } from '../context/AuthContext'
-import { formatTimeLabel, formatDateLabel } from '../utils/time'
+import { formatTimeLabel, formatDateLabel, getMonday } from '../utils/time'
+import CalendarWeek from '../components/CalendarWeek'
 
 export default function StaffDashboard() {
   const { profile, session, signOut } = useAuth()
@@ -10,6 +11,7 @@ export default function StaffDashboard() {
   const [appointments, setAppointments] = useState([])
   const [loading, setLoading] = useState(true)
   const [updatingId, setUpdatingId] = useState(null)
+  const [weekStart, setWeekStart] = useState(getMonday(new Date()))
 
   useEffect(() => {
     if (session) init()
@@ -48,12 +50,27 @@ export default function StaffDashboard() {
     setUpdatingId(null)
   }
 
+  function prevWeek() {
+    setWeekStart((prev) => {
+      const d = new Date(prev)
+      d.setDate(d.getDate() - 7)
+      return d
+    })
+  }
+  function nextWeek() {
+    setWeekStart((prev) => {
+      const d = new Date(prev)
+      d.setDate(d.getDate() + 7)
+      return d
+    })
+  }
+
   const todayStr = new Date().toISOString().split('T')[0]
   const upcoming = appointments.filter((a) => a.appointment_date >= todayStr && a.status === 'confirmed')
   const past = appointments.filter((a) => a.appointment_date < todayStr || a.status !== 'confirmed')
 
   return (
-    <div className="container" style={{ padding: '56px 0 80px' }}>
+    <div className="container" style={{ paddingTop: 56, paddingBottom: 80 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
         <div>
           <p className="eyebrow">Staff Dashboard</p>
@@ -72,6 +89,18 @@ export default function StaffDashboard() {
           "practitioners" table with profile_id = your user id.
         </p>
       )}
+
+      <section style={{ marginTop: 40 }}>
+        <h3 style={{ marginBottom: 16 }}>Calendar</h3>
+        {!loading && practitionerId && (
+          <CalendarWeek
+            appointments={appointments}
+            weekStart={weekStart}
+            onPrevWeek={prevWeek}
+            onNextWeek={nextWeek}
+          />
+        )}
+      </section>
 
       <section style={{ marginTop: 40 }}>
         <h3 style={{ marginBottom: 16 }}>Upcoming Appointments</h3>

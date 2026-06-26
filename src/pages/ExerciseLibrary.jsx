@@ -50,7 +50,7 @@ export default function ExerciseLibrary() {
   }
 
   return (
-    <div className="container" style={{ padding: '56px 0 80px' }}>
+    <div className="container" style={{ paddingTop: 56, paddingBottom: 80 }}>
       <p className="eyebrow">Exercise Library</p>
       <h1 style={{ marginBottom: 8 }}>Exercise Library</h1>
       <p style={{ color: 'var(--color-text-muted)', marginBottom: 32 }}>

@@ -10,6 +10,7 @@ import './styles/auth.css'
 import './styles/booking.css'
 import './styles/appointments.css'
 import './styles/plans.css'
+import './styles/calendar.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

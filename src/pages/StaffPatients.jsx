@@ -45,7 +45,7 @@ export default function StaffPatients() {
   }
 
   return (
-    <div className="container" style={{ padding: '56px 0 80px' }}>
+    <div className="container" style={{ paddingTop: 56, paddingBottom: 80 }}>
       <p className="eyebrow">Your Patients</p>
       <h1 style={{ marginBottom: 28 }}>Patients</h1>
 

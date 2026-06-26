@@ -108,11 +108,11 @@ export default function PatientPlanEditor() {
   }
 
   if (loading) {
-    return <div className="container" style={{ padding: '80px 0' }}>Loading…</div>
+    return <div className="container" style={{ paddingTop: 80, paddingBottom: 80 }}>Loading…</div>
   }
 
   return (
-    <div className="container" style={{ padding: '56px 0 80px' }}>
+    <div className="container" style={{ paddingTop: 56, paddingBottom: 80 }}>
       <p className="eyebrow"><Link to="/staff/patients" style={{ color: 'var(--color-primary)' }}>← Back to Patients</Link></p>
       <h1 style={{ marginBottom: 28 }}>{patientName}'s Plans</h1>
 

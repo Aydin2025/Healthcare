@@ -151,8 +151,7 @@ export default function Book() {
   // --- not logged in -------------------------------------------------
   if (!session) {
     return (
-      <div className="container" style={{ padding: '80px 0', textAlign: 'center' }}>
-        <p className="eyebrow">Booking requires an account</p>
+      <div className="container" style={{ paddingTop: 80, paddingBottom: 80, textAlign: 'center' }}>
         <h1>Log in to book a visit</h1>
         <p style={{ color: 'var(--color-text-muted)', marginTop: 12, maxWidth: 420, marginLeft: 'auto', marginRight: 'auto' }}>
           Create a free account so we can keep your appointments and exercise plan in one place.
@@ -168,8 +167,7 @@ export default function Book() {
   // --- confirmed -------------------------------------------------
   if (confirmed) {
     return (
-      <div className="container" style={{ padding: '80px 0', textAlign: 'center' }}>
-        <p className="eyebrow">Booked</p>
+      <div className="container" style={{ paddingTop: 80, paddingBottom: 80, textAlign: 'center' }}>
         <h1>You're all set.</h1>
         <p style={{ color: 'var(--color-text-muted)', marginTop: 12 }}>
           {selectedService.name} with {selectedPractitioner.profiles?.full_name || 'your practitioner'} on{' '}
@@ -184,15 +182,21 @@ export default function Book() {
 
   // --- booking form -------------------------------------------------
   return (
-    <div className="container" style={{ padding: '56px 0 80px' }}>
+    <div className="container" style={{ paddingTop: 56, paddingBottom: 80 }}>
       <p className="eyebrow">Book a visit</p>
       <h1 style={{ marginBottom: 28 }}>Book a Visit</h1>
 
-      <div className="booking-steps">
-        <span className={step >= 1 ? 'booking-step booking-step--active' : 'booking-step'}>1. Service</span>
-        <span className={step >= 2 ? 'booking-step booking-step--active' : 'booking-step'}>2. Practitioner</span>
-        <span className={step >= 3 ? 'booking-step booking-step--active' : 'booking-step'}>3. Time</span>
-        <span className={step >= 4 ? 'booking-step booking-step--active' : 'booking-step'}>4. Confirm</span>
+      <div className="booking-progress">
+        {['Service', 'Practitioner', 'Time', 'Confirm'].map((label, idx) => {
+          const stepNum = idx + 1
+          const state = stepNum < step ? 'done' : stepNum === step ? 'active' : 'upcoming'
+          return (
+            <div className={`booking-progress__item booking-progress__item--${state}`} key={label}>
+              <div className="booking-progress__circle">{state === 'done' ? '✓' : stepNum}</div>
+              <span className="booking-progress__label">{label}</span>
+            </div>
+          )
+        })}
       </div>
 
       {error && <p className="auth-error" style={{ marginBottom: 20 }}>{error}</p>}

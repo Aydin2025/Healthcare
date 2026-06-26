@@ -1,21 +1,63 @@
-.booking-steps {
+.booking-progress {
   display: flex;
-  gap: 24px;
-  margin-bottom: 32px;
-  flex-wrap: wrap;
+  margin-bottom: 40px;
+  max-width: 520px;
 }
-.booking-step {
+.booking-progress__item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.booking-progress__item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 17px;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background: var(--color-border);
+  z-index: 0;
+}
+.booking-progress__item--done:not(:last-child)::after {
+  background: var(--color-sage);
+}
+.booking-progress__circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--font-mono);
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  font-weight: 600;
+  font-size: 0.85rem;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
   color: var(--color-text-muted);
-  padding-bottom: 8px;
-  border-bottom: 2px solid var(--color-border);
+  position: relative;
+  z-index: 1;
 }
-.booking-step--active {
+.booking-progress__item--done .booking-progress__circle {
+  background: var(--color-sage);
+  border-color: var(--color-sage);
   color: var(--color-primary-dark);
-  border-bottom-color: var(--color-coral);
+}
+.booking-progress__item--active .booking-progress__circle {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+}
+.booking-progress__label {
+  margin-top: 8px;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+.booking-progress__item--active .booking-progress__label {
+  color: var(--color-primary-dark);
+  font-weight: 600;
 }
 
 .booking-options {
@@ -60,4 +102,10 @@
   background: var(--color-primary);
   color: white;
   border-color: var(--color-primary);
+}
+
+@media (max-width: 480px) {
+  .booking-progress__label {
+    font-size: 0.68rem;
+  }
 }

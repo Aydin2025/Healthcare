@@ -110,7 +110,7 @@ export default function PatientDashboard() {
   const past = appointments.filter((a) => a.appointment_date < todayStr || a.status === 'cancelled')
 
   return (
-    <div className="container" style={{ padding: '56px 0 80px' }}>
+    <div className="container" style={{ paddingTop: 56, paddingBottom: 80 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
         <div>
           <p className="eyebrow">Patient Dashboard</p>
