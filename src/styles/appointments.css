@@ -1,0 +1,42 @@
+.appt-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.appt-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 18px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.appt-card--muted {
+  opacity: 0.7;
+}
+.appt-meta {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+}
+.status-badge {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: var(--color-sand);
+  color: var(--color-text-muted);
+}
+.status-badge--completed {
+  background: var(--color-sage);
+  color: var(--color-primary-dark);
+}
+.status-badge--cancelled {
+  background: #FBEAE3;
+  color: var(--color-coral-dark);
+}
