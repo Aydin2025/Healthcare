@@ -1,0 +1,63 @@
+.booking-steps {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+.booking-step {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--color-border);
+}
+.booking-step--active {
+  color: var(--color-primary-dark);
+  border-bottom-color: var(--color-coral);
+}
+
+.booking-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+.booking-option {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.booking-option strong { color: var(--color-primary-dark); }
+.booking-option span { font-size: 0.85rem; color: var(--color-text-muted); }
+.booking-option:hover {
+  border-color: var(--color-primary);
+}
+
+.slot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 10px;
+  margin-top: 4px;
+}
+.slot-btn {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.slot-btn:hover {
+  border-color: var(--color-sage);
+}
+.slot-btn--active {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
