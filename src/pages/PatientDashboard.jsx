@@ -28,7 +28,7 @@ export default function PatientDashboard() {
   async function loadAppointments() {
     const { data } = await supabase
       .from('appointments')
-      .select('id, appointment_date, start_time, end_time, status, services(name), practitioners(specialty, profiles(full_name))')
+      .select('id, appointment_date, start_time, end_time, status, amount_cents, payment_status, services(name), practitioners(specialty, profiles(full_name))')
       .eq('patient_id', session.user.id)
       .order('appointment_date', { ascending: true })
       .order('start_time', { ascending: true })
@@ -136,7 +136,20 @@ export default function PatientDashboard() {
                 <p className="appt-meta">
                   {formatDateLabel(a.appointment_date)} · {formatTimeLabel(a.start_time)} with{' '}
                   {a.practitioners?.profiles?.full_name || 'your practitioner'}
+                  {a.amount_cents ? ` · $${(a.amount_cents / 100).toFixed(2)}` : ''}
                 </p>
+                {a.amount_cents ? (
+                  <span
+                    className={`status-badge ${a.payment_status !== 'unpaid' ? 'status-badge--completed' : ''}`}
+                    style={{ marginTop: 6, display: 'inline-block' }}
+                  >
+                    {a.payment_status === 'unpaid'
+                      ? 'payment due at visit'
+                      : a.payment_status === 'paid_online'
+                        ? 'paid online'
+                        : 'paid'}
+                  </span>
+                ) : null}
               </div>
               <button
                 className="btn btn--secondary"

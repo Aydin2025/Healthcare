@@ -8,6 +8,7 @@ import Team from './pages/Team'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Book from './pages/Book'
+import BookingSuccess from './pages/BookingSuccess'
 import PatientDashboard from './pages/PatientDashboard'
 import StaffDashboard from './pages/StaffDashboard'
 import StaffPatients from './pages/StaffPatients'
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/book" element={<Book />} />
+          <Route path="/book/success" element={<BookingSuccess />} />
           <Route
             path="/dashboard"
             element={

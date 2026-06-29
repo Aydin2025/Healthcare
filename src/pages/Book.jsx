@@ -56,7 +56,7 @@ function generateSlots(availabilityBlocks, existingAppointments, durationMinutes
 }
 
 export default function Book() {
-  const { session } = useAuth()
+  const { session, profile } = useAuth()
 
   const [step, setStep] = useState(1)
   const [services, setServices] = useState([])
@@ -124,19 +124,30 @@ export default function Book() {
     setLoadingSlots(false)
   }
 
-  async function confirmBooking() {
+  async function createAppointment() {
+    return await supabase
+      .from('appointments')
+      .insert({
+        patient_id: session.user.id,
+        practitioner_id: selectedPractitioner.id,
+        service_id: selectedService.id,
+        appointment_date: selectedDate,
+        start_time: selectedSlot.start,
+        end_time: selectedSlot.end,
+        status: 'confirmed',
+        amount_cents: selectedService.price_cents || null,
+      })
+      .select()
+      .single()
+  }
+
+  // Used both for free/no-price bookings and "pay in person" bookings —
+  // in both cases we just create the appointment and we're done.
+  async function confirmBookingOffline() {
     setBooking(true)
     setError('')
 
-    const { error } = await supabase.from('appointments').insert({
-      patient_id: session.user.id,
-      practitioner_id: selectedPractitioner.id,
-      service_id: selectedService.id,
-      appointment_date: selectedDate,
-      start_time: selectedSlot.start,
-      end_time: selectedSlot.end,
-      status: 'confirmed',
-    })
+    const { error } = await createAppointment()
 
     setBooking(false)
 
@@ -147,6 +158,46 @@ export default function Book() {
 
     setConfirmed(true)
   }
+
+  async function confirmBookingOnline() {
+    setBooking(true)
+    setError('')
+
+    const { data, error } = await createAppointment()
+
+    if (error) {
+      setBooking(false)
+      setError(error.message)
+      return
+    }
+
+    try {
+      const response = await fetch('/.netlify/functions/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          appointmentId: data.id,
+          amountCents: selectedService.price_cents,
+          serviceName: selectedService.name,
+          successUrl: `${window.location.origin}/book/success?appointment_id=${data.id}`,
+          cancelUrl: `${window.location.origin}/book`,
+        }),
+      })
+
+      const result = await response.json()
+
+      if (!response.ok || !result.url) {
+        throw new Error(result.error || 'Could not start checkout')
+      }
+
+      window.location.href = result.url
+    } catch (err) {
+      setBooking(false)
+      setError(err.message)
+    }
+  }
+
+  const isStaff = profile?.role === 'practitioner' || profile?.role === 'admin'
 
   // --- not logged in -------------------------------------------------
   if (!session) {
@@ -160,6 +211,19 @@ export default function Book() {
           <Link to="/login" className="btn btn--secondary">Log In</Link>
           <Link to="/signup" className="btn btn--primary">Sign Up</Link>
         </div>
+      </div>
+    )
+  }
+
+  if (isStaff) {
+    return (
+      <div className="container" style={{ paddingTop: 80, paddingBottom: 80, textAlign: 'center' }}>
+        <p className="eyebrow">Staff account</p>
+        <h1>This page is for patients</h1>
+        <p style={{ color: 'var(--color-text-muted)', marginTop: 12, maxWidth: 420, marginLeft: 'auto', marginRight: 'auto' }}>
+          Staff accounts can't book visits for themselves. If you need to manage appointments, use your staff dashboard.
+        </p>
+        <Link to="/staff" className="btn btn--primary" style={{ marginTop: 24 }}>Go to Staff Dashboard</Link>
       </div>
     )
   }
@@ -215,7 +279,10 @@ export default function Book() {
               onClick={() => { setSelectedService(service); setStep(2) }}
             >
               <strong>{service.name}</strong>
-              <span>{service.duration_minutes} min</span>
+              <span>
+                {service.duration_minutes} min
+                {service.price_cents ? ` · $${(service.price_cents / 100).toFixed(2)}` : ''}
+              </span>
             </button>
           ))}
         </div>
@@ -287,11 +354,27 @@ export default function Book() {
           <p><strong>Practitioner:</strong> {selectedPractitioner.profiles?.full_name || '—'}</p>
           <p><strong>Date:</strong> {selectedDate}</p>
           <p><strong>Time:</strong> {formatTimeLabel(selectedSlot.start)} – {formatTimeLabel(selectedSlot.end)}</p>
-          <div style={{ display: 'flex', gap: 12, marginTop: 20 }}>
-            <button className="btn btn--secondary" onClick={() => setStep(3)}>Back</button>
-            <button className="btn btn--primary" disabled={booking} onClick={confirmBooking}>
-              {booking ? 'Booking…' : 'Confirm Booking'}
-            </button>
+          {selectedService.price_cents ? (
+            <p><strong>Price:</strong> ${(selectedService.price_cents / 100).toFixed(2)}</p>
+          ) : null}
+
+          <div style={{ display: 'flex', gap: 12, marginTop: 20, flexWrap: 'wrap' }}>
+            <button className="btn btn--secondary" disabled={booking} onClick={() => setStep(3)}>Back</button>
+
+            {selectedService.price_cents ? (
+              <>
+                <button className="btn btn--secondary" disabled={booking} onClick={confirmBookingOffline}>
+                  {booking ? 'Booking…' : 'Pay In Person'}
+                </button>
+                <button className="btn btn--primary" disabled={booking} onClick={confirmBookingOnline}>
+                  {booking ? 'Redirecting…' : 'Pay Online Now'}
+                </button>
+              </>
+            ) : (
+              <button className="btn btn--primary" disabled={booking} onClick={confirmBookingOffline}>
+                {booking ? 'Booking…' : 'Confirm Booking'}
+              </button>
+            )}
           </div>
         </div>
       )}
