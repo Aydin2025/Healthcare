@@ -14,6 +14,7 @@ import StaffDashboard from './pages/StaffDashboard'
 import StaffPatients from './pages/StaffPatients'
 import PatientPlanEditor from './pages/PatientPlanEditor'
 import ExerciseLibrary from './pages/ExerciseLibrary'
+import ProfileSettings from './pages/ProfileSettings'
 
 export default function App() {
   return (
@@ -57,6 +58,14 @@ export default function App() {
             element={
               <ProtectedRoute allowedRoles={['practitioner', 'admin']}>
                 <PatientPlanEditor />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <ProfileSettings />
               </ProtectedRoute>
             }
           />

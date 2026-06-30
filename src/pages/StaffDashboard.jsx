@@ -142,6 +142,7 @@ export default function StaffDashboard() {
         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
           <Link to="/staff/patients" className="btn btn--secondary">Patients</Link>
           <Link to="/staff/exercises" className="btn btn--secondary">Exercise Library</Link>
+          <Link to="/settings" className="btn btn--secondary">Profile</Link>
           <button className="btn btn--secondary" onClick={signOut}>Log Out</button>
         </div>
       </div>

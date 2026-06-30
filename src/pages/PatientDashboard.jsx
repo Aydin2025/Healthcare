@@ -118,6 +118,7 @@ export default function PatientDashboard() {
         </div>
         <div style={{ display: 'flex', gap: 12 }}>
           <Link to="/book" className="btn btn--primary">Book a Visit</Link>
+          <Link to="/settings" className="btn btn--secondary">Profile</Link>
           <button className="btn btn--secondary" onClick={signOut}>Log Out</button>
         </div>
       </div>

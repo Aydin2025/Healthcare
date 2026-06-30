@@ -15,8 +15,7 @@ export default function Navbar() {
     navigate('/')
   }
 
-  const isStaff = profile?.role === 'practitioner' || profile?.role === 'admin'
-  const dashboardPath = isStaff ? '/staff' : '/dashboard'
+  const dashboardPath = profile?.role === 'practitioner' || profile?.role === 'admin' ? '/staff' : '/dashboard'
 
   return (
     <header className="navbar">
@@ -39,7 +38,7 @@ export default function Navbar() {
           <NavLink to="/login" className={linkClass}>Log In</NavLink>
         )}
 
-        {!isStaff && <Link to="/book" className="navbar__cta">Book a Visit</Link>}
+        <Link to="/book" className="navbar__cta">Book a Visit</Link>
       </nav>
     </header>
   )
