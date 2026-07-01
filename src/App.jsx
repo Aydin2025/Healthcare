@@ -14,7 +14,11 @@ import StaffDashboard from './pages/StaffDashboard'
 import StaffPatients from './pages/StaffPatients'
 import PatientPlanEditor from './pages/PatientPlanEditor'
 import ExerciseLibrary from './pages/ExerciseLibrary'
-import ProfileSettings from './pages/ProfileSettings'
+import AdminLayout from './pages/admin/AdminLayout'
+import AdminUsers from './pages/admin/AdminUsers'
+import AdminClinic from './pages/admin/AdminClinic'
+import AdminServices from './pages/admin/AdminServices'
+import AdminAvailability from './pages/admin/AdminAvailability'
 
 export default function App() {
   return (
@@ -62,14 +66,6 @@ export default function App() {
             }
           />
           <Route
-            path="/settings"
-            element={
-              <ProtectedRoute>
-                <ProfileSettings />
-              </ProtectedRoute>
-            }
-          />
-          <Route
             path="/staff/exercises"
             element={
               <ProtectedRoute allowedRoles={['practitioner', 'admin']}>
@@ -77,6 +73,13 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<AdminUsers />} />
+            <Route path="users" element={<AdminUsers />} />
+            <Route path="clinic" element={<AdminClinic />} />
+            <Route path="services" element={<AdminServices />} />
+            <Route path="availability" element={<AdminAvailability />} />
+          </Route>
         </Routes>
       </main>
       <Footer />

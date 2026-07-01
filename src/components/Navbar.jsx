@@ -15,7 +15,8 @@ export default function Navbar() {
     navigate('/')
   }
 
-  const dashboardPath = profile?.role === 'practitioner' || profile?.role === 'admin' ? '/staff' : '/dashboard'
+  const isStaff = profile?.role === 'practitioner' || profile?.role === 'admin'
+  const dashboardPath = isStaff ? '/staff' : '/dashboard'
 
   return (
     <header className="navbar">
@@ -30,6 +31,9 @@ export default function Navbar() {
         {session ? (
           <>
             <NavLink to={dashboardPath} className={linkClass}>Dashboard</NavLink>
+            {profile?.role === 'admin' && (
+              <NavLink to="/admin" className={linkClass}>Admin</NavLink>
+            )}
             <button onClick={handleLogout} className="navbar__link" style={{ background: 'none', border: 'none' }}>
               Log Out
             </button>
@@ -38,7 +42,7 @@ export default function Navbar() {
           <NavLink to="/login" className={linkClass}>Log In</NavLink>
         )}
 
-        <Link to="/book" className="navbar__cta">Book a Visit</Link>
+        {!isStaff && <Link to="/book" className="navbar__cta">Book a Visit</Link>}
       </nav>
     </header>
   )
